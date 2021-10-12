@@ -1,17 +1,47 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.trackmysleepquality.database
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import java.security.AccessControlContext
+
+
+@Database(entities = [SleepNight::class], version = 1, exportSchema = false) //Can add multiple entities.
+abstract class SleepDatabase : RoomDatabase(){  //Class is abstract extending as its not access directly, its accessed from Room
+
+    //Define that DAO is used, can add multiple DAO's
+    abstract val sleepDatabaseDao: SleepDatabaseDao
+
+    companion object{
+        @Volatile
+        private var INSTANCE: SleepDatabase? = null  //INSTANCE keeps a reference to the database to connections dont need to be opened repeatedly.
+
+        fun getInstance(context: Context) : SleepDatabase {
+            synchronized(this) {
+                var instance = INSTANCE
+
+                if (instance == null) {   //Check if there is already a database
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        SleepDatabase::class.java,
+                        "sleep_history_database"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+                    INSTANCE = instance
+
+            }
+                return instance
+            }
+
+
+
+        }
+
+    }
+
+
+
+
+}
