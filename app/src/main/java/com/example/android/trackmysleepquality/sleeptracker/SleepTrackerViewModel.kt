@@ -134,19 +134,6 @@ class SleepTrackerViewModel(
         _navigateToSleepQuality.value = null
     }
 
-    /**
-     * Executes when the CLEAR button is clicked.
-     */
-    fun onClear() {
-        viewModelScope.launch {
-            // Clear the database table.
-            clear()
-
-            // And clear tonight since it's no longer in the database
-            tonight.value = null
-        }
-    }
-
     //he START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
     val startButtonVisible = Transformations.map(tonight) {
         null == it
@@ -158,7 +145,46 @@ class SleepTrackerViewModel(
         it?.isNotEmpty()
     }
 
+    /**
+     * Request a toast by setting this value to true.
+     *
+     * This is private because we don't want to expose setting this value to the Fragment.
+     */
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
 
+    /**
+     * If this is true, immediately `show()` a toast and call `doneShowingSnackbar()`.
+     */
+    val showSnackBarEvent: LiveData<Boolean>
+        get() = _showSnackbarEvent
+
+
+    /**
+     * Call this immediately after calling `show()` on a toast.
+     *
+     * It will clear the toast request, so if the user rotates their phone it won't show a duplicate
+     * toast.
+     */
+    fun doneShowingSnackbar() {
+        _showSnackbarEvent.value = false
+    }
+
+    /**
+     * Executes when the CLEAR button is clicked.
+     */
+    fun onClear() {
+        viewModelScope.launch {
+            // Clear the database table.
+            clear()
+
+            // And clear tonight since it's no longer in the database
+            tonight.value = null
+
+            //Snackbar
+            _showSnackbarEvent.value = true
+
+        }
+    }
 
 }
 
