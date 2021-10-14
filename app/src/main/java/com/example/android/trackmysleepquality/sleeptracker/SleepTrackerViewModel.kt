@@ -1,10 +1,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.formatNights
@@ -27,10 +24,24 @@ class SleepTrackerViewModel(
     }
 
 
+    /**
+     * Variable that tells the Fragment to navigate to a specific [SleepQualityFragment]
+     *
+     * This is private because we don't want to expose setting this value to the Fragment.
+     */
+    private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+    //Exposed value
+    val navigateToSleepQuality: LiveData<SleepNight>
+        get() = _navigateToSleepQuality
+
+
     //To initialize the tonight variable, create an init block and call initializeTonight()
     init {
         initializeTonight()
-    }
+
+     }
+
+
 
     //Implement initializeTonight(). Use the viewModelScope.launch{} to start a coroutine in the ViewModelScope.
     private fun initializeTonight() {
@@ -112,7 +123,15 @@ class SleepTrackerViewModel(
 
             //If it hasn't been set yet, set the endTimeMilli to the current system time and call update() with the night.
             update(oldNight)
+
+            _navigateToSleepQuality.value = oldNight
+
         }
+    }
+
+    //function that resets the event.
+    fun doneNavigating() {
+        _navigateToSleepQuality.value = null
     }
 
     /**
@@ -127,6 +146,8 @@ class SleepTrackerViewModel(
             tonight.value = null
         }
     }
+
+
 
 
 }
