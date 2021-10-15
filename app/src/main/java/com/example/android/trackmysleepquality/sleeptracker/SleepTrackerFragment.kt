@@ -67,6 +67,15 @@ class SleepTrackerFragment : Fragment() {
         //Access through the binding object to the ViewModel
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
+        val adapter = SleepNightAdapter()
+        binding.sleepList.adapter = adapter
+
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+            it?.let{
+             adapter.data = it
+            }
+        })
+
         //Specify current activity as the lifecycle owner of the binding. Needed so that the binding can observe LiveData updates.
         binding.lifecycleOwner = this
 
