@@ -134,16 +134,16 @@ class SleepTrackerViewModel(
         _navigateToSleepQuality.value = null
     }
 
-    //he START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
-    val startButtonVisible = Transformations.map(tonight) {
-        null == it
-    }
-    val stopButtonVisible = Transformations.map(tonight) {
-        null != it
-    }
-    val clearButtonVisible = Transformations.map(nights) {
-        it?.isNotEmpty()
-    }
+//    //The START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
+//    val startButtonVisible = Transformations.map(tonight) {
+//        null == it
+//    }
+//    val stopButtonVisible = Transformations.map(tonight) {
+//        null != it
+//    }
+//    val clearButtonVisible = Transformations.map(nights) {
+//        it?.isNotEmpty()
+//    }
 
     /**
      * Request a toast by setting this value to true.
