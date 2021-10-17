@@ -1,19 +1,3 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.trackmysleepquality
 
 import android.annotation.SuppressLint
@@ -120,19 +104,19 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
         nights.forEach {
             append("<br>")
             append(resources.getString(R.string.start_time))
-            append("\t${convertLongToDateString(it.startTimeLilli)}<br>")
-            if (it.endTimeMilli != it.startTimeLilli) {
+            append("\t${convertLongToDateString(it.startTimeMilli)}<br>")
+            if (it.endTimeMilli != it.startTimeMilli) {
                 append(resources.getString(R.string.end_time))
                 append("\t${convertLongToDateString(it.endTimeMilli)}<br>")
                 append(resources.getString(R.string.quality))
                 append("\t${convertNumericQualityToString(it.sleepQuality, resources)}<br>")
                 append(resources.getString(R.string.hours_slept))
                 // Hours
-                append("\t ${it.endTimeMilli.minus(it.startTimeLilli) / 1000 / 60 / 60}:")
+                append("\t ${it.endTimeMilli.minus(it.startTimeMilli) / 1000 / 60 / 60}:")
                 // Minutes
-                append("${it.endTimeMilli.minus(it.startTimeLilli) / 1000 / 60}:")
+                append("${it.endTimeMilli.minus(it.startTimeMilli) / 1000 / 60}:")
                 // Seconds
-                append("${it.endTimeMilli.minus(it.startTimeLilli) / 1000}<br><br>")
+                append("${it.endTimeMilli.minus(it.startTimeMilli) / 1000}<br><br>")
             }
         }
     }

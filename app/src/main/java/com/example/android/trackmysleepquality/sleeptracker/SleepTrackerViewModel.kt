@@ -67,7 +67,7 @@ class SleepTrackerViewModel(
         //Let the coroutine get tonight from the database. If the start and end times are the not the same,
         // meaning, the night has already been completed, return null. Otherwise, return night:
         var night = database.getTonight()
-        if (night?.endTimeMilli != night?.startTimeLilli) {
+        if (night?.endTimeMilli != night?.startTimeMilli) {
             night = null
         }
         return night
@@ -134,6 +134,18 @@ class SleepTrackerViewModel(
         _navigateToSleepQuality.value = null
     }
 
+    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
+    val navigateToSleepDataQuality
+        get() = _navigateToSleepDataQuality
+
+    fun onSleepNightClicked(id: Long) {
+        _navigateToSleepDataQuality.value = id
+    }
+
+    fun onSleepDataQualityNavigated() {
+        _navigateToSleepDataQuality.value = null
+    }
+
 //    //The START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
 //    val startButtonVisible = Transformations.map(tonight) {
 //        null == it
@@ -185,6 +197,8 @@ class SleepTrackerViewModel(
 
         }
     }
+
+
 
 }
 
