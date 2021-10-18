@@ -45,7 +45,7 @@ class SleepTrackerViewModel(
 
     //Implement initializeTonight(). Use the viewModelScope.launch{} to start a coroutine in the ViewModelScope.
     private fun initializeTonight() {
-          {
+        run  {
               //Inside, get the value for tonight from the database by calling getTonightFromDatabase(), which you will define in the next step, and assign it to tonight.value:
 
               viewModelScope.launch {
@@ -146,16 +146,18 @@ class SleepTrackerViewModel(
         _navigateToSleepDataQuality.value = null
     }
 
-//    //The START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
-//    val startButtonVisible = Transformations.map(tonight) {
-//        null == it
-//    }
-//    val stopButtonVisible = Transformations.map(tonight) {
-//        null != it
-//    }
-//    val clearButtonVisible = Transformations.map(nights) {
-//        it?.isNotEmpty()
-//    }
+
+
+    //The START button should be visible when tonight is null, the STOP button when tonight is not null, and the CLEAR button if nights contains any nights:
+    val startButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
+    val stopButtonVisible = Transformations.map(tonight) {
+        null != it
+    }
+    val clearButtonVisible = Transformations.map(nights) {
+        it?.isNotEmpty()
+    }
 
     /**
      * Request a toast by setting this value to true.

@@ -78,7 +78,7 @@
              from the ViewModel. The click handler is in the ViewModel as well, and
              you can set it for the Views using this lambda pattern. -->
 
-<!--        android:enabled="@{sleepTrackerViewModel.startButtonVisible}"-->
+
         <Button
             android:id="@+id/start_button"
             style="@style/SleepButtons"
@@ -87,13 +87,13 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/start"
             android:onClick="@{() ->  sleepTrackerViewModel.onStartTracking()}"
-
+            android:enabled="@{sleepTrackerViewModel.startButtonVisible}"
             app:layout_constraintBaseline_toBaselineOf="@id/stop_button"
             app:layout_constraintEnd_toStartOf="@+id/stop_button"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent" />
 
-<!--        android:enabled="@{sleepTrackerViewModel.stopButtonVisible}"-->
+
         <Button
             android:id="@+id/stop_button"
             style="@style/SleepButtons"
@@ -103,12 +103,12 @@
             android:layout_marginEnd="@dimen/margin"
             android:text="@string/stop"
             android:onClick="@{() -> sleepTrackerViewModel.onStopTracking()}"
-
+            android:enabled="@{sleepTrackerViewModel.stopButtonVisible}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/start_button"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        android:enabled="@{sleepTrackerViewModel.clearButtonVisible}"-->
+
         <Button
             android:id="@+id/clear_button"
             style="@style/SleepButtons"
@@ -119,7 +119,7 @@
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/clear"
             android:onClick="@{() -> sleepTrackerViewModel.onClear()}"
-
+            android:enabled="@{sleepTrackerViewModel.clearButtonVisible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
